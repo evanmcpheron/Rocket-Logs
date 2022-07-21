@@ -1,0 +1,51 @@
+<idea-plugin>
+  <id>com.emcpheron</id>
+  <name>Rocket Logs</name>
+  <vendor email="evan.mcpheron@icloud.com" url="https://emcpheron.com">Evan McPheron</vendor>
+
+  <description><![CDATA[
+        <h2>RocketLog</h2>
+        <p>A Webstorm/Intellij plugin to quickly insert Javascript console.log</p>
+        <h3>Features:</h3>
+        <ul>
+            <li><b>Insert log</b> - smart Javascript console.log() insertion</li>
+            <br>
+            <br>
+            <p>
+            shortcut for insertion (^ + ⌘ + L) on Mac and (ALT + L) on others
+            </p>
+            <p>
+            shortcut for deletion (⌥ + ⇧ + L) on Mac and (ALT + ⇧ + L) on others
+            </p>
+        </ul>]]>
+  </description>
+  <idea-version since-build="192.*"/>
+  <depends>com.intellij.modules.platform</depends>
+  <depends>JavaScript</depends>
+
+  <extensions defaultExtensionNs="com.intellij">
+    <applicationConfigurable parentId="tools" instance="com.emcpheron.settings.RocketLogSettingsConfigurable"
+                             id="com.emcpheron.settings.RocketLogSettingsConfigurable" displayName="RocketLog"/>
+    <applicationService serviceImplementation="com.emcpheron.settings.RocketLogSettings"/>
+    <postStartupActivity implementation="com.emcpheron.UpdateNotify"/>
+    <notificationGroup id="com.emcpheron" displayType="STICKY_BALLOON"/>
+    <applicationService serviceImplementation="com.emcpheron.ApplicationServicePlaceholder" id="com.emcpheron"/>
+  </extensions>
+
+  <actions>
+    <group id="com.emcpheron.RocketLogActionsGroup" class="com.emcpheron.RocketLogActionsGroup" text="Log It"
+           description="Generate javascript logs" popup="true">
+      <add-to-group group-id="CodeMenu" anchor="last"/>
+      <action id="com.emcpheron.addLog" class="com.emcpheron.RocketLogAdd" text="Insert RocketLog's Console.Log"
+              description="Generate a console.log() for that variable">
+        <keyboard-shortcut keymap="$default" first-keystroke="ctrl meta L"/>
+            <keyboard-shortcut keymap="Mac OS X" first-keystroke="shift meta L"/>
+      </action>
+      <action id="com.emcpheron.removeLogs" class="com.emcpheron.RocketLogRemove" text="Remove RocketLog's Console.Log"
+              description="Remove console.log() generate by RocketLog plugin">
+        <keyboard-shortcut keymap="$default" first-keystroke="alt shift L"/>
+        <keyboard-shortcut keymap="Mac OS X" first-keystroke="meta shift L"/>
+      </action>
+    </group>
+  </actions>
+</idea-plugin>
